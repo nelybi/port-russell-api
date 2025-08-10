@@ -4,10 +4,13 @@ Application Node.js / Express / MongoDB pour gérer les catways et leurs réserv
 
 ## Liens livrables
 
-- **Dépôt GitHub** : https://github.com/<ton-user>/port-russell-api
-- **Application hébergée** : https://<ton-app>.onrender.com (exemple)
+- **Dépôt GitHub** : https://github.com/nelybi/port-russell-api
+- **Application (en ligne via ngrok)** : https://41de34ad07ee.ngrok-free.app
   - Identifiants démo : `admin@port-russell.local` / `Admin123!`
-  - Swagger : `https://<ton-app>.onrender.com/api-docs`
+  - **Swagger** : https://41de34ad07ee.ngrok-free.app/api-docs
+
+> Note : l’URL ngrok reste active tant que le tunnel est ouvert. En cas de changement, je mettrai à jour ce lien.
+
 
 ## Stack
 
