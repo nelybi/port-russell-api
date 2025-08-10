@@ -1,0 +1,25 @@
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  margin: 24px;
+}
+header nav a {
+  margin-right: 12px;
+}
+table {
+  border-collapse: collapse;
+  margin-top: 8px;
+}
+th,
+td {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+}
+form {
+  margin-top: 12px;
+}
+input,
+select,
+button {
+  padding: 6px 8px;
+  margin-right: 6px;
+}

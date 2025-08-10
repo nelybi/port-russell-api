@@ -1,0 +1,326 @@
+openapi: 3.0.3
+info:
+  title: Port Russell API
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+
+paths:
+  /catways:
+    get:
+      summary: Lister tous les catways
+      tags: [Catways]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Catway' }
+    post:
+      summary: Créer un catway
+      tags: [Catways]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CatwayCreate' }
+            example: { catwayNumber: 99, catwayType: short, catwayState: available }
+      responses:
+        "201":
+          description: Créé
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Catway' }
+
+  /catways/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema: { type: integer }
+    get:
+      summary: Obtenir un catway
+      tags: [Catways]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Catway' }
+        "404": { description: Not Found }
+    put:
+      summary: Mettre à jour l'état d'un catway
+      tags: [Catways]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [catwayState]
+              properties:
+                catwayState: { type: string }
+            example: { catwayState: occupied }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Catway' }
+        "404": { description: Not Found }
+    delete:
+      summary: Supprimer un catway
+      tags: [Catways]
+      responses:
+        "204": { description: No Content }
+
+  /catways/{id}/reservations:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema: { type: integer }
+    get:
+      summary: Lister les réservations d'un catway
+      tags: [Reservations]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Reservation' }
+    post:
+      summary: Créer une réservation pour un catway
+      tags: [Reservations]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ReservationCreate' }
+            example:
+              clientName: "Jean Dupont"
+              boatName: "L'Écume"
+              startDate: "2025-08-15"
+              endDate: "2025-08-20"
+      responses:
+        "201":
+          description: Créé
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Reservation' }
+
+  /catways/{id}/reservations/{idReservation}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema: { type: integer }
+      - in: path
+        name: idReservation
+        required: true
+        schema: { type: string }
+    get:
+      summary: Détail d'une réservation
+      tags: [Reservations]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Reservation' }
+        "404": { description: Not Found }
+    put:
+      summary: Modifier une réservation
+      tags: [Reservations]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ReservationUpdate' }
+            example:
+              clientName: "Jean Dupont"
+              boatName: "L'Écume"
+              startDate: "2025-08-16"
+              endDate: "2025-08-21"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Reservation' }
+        "404": { description: Not Found }
+    delete:
+      summary: Supprimer une réservation
+      tags: [Reservations]
+      responses:
+        "204": { description: No Content }
+
+  /users:
+    get:
+      summary: Lister les utilisateurs
+      tags: [Users]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/UserOut' }
+    post:
+      summary: Créer un utilisateur
+      tags: [Users]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/UserIn' }
+            example:
+              username: "Alice"
+              email: "alice@example.com"
+              password: "Secret123!"
+      responses:
+        "201":
+          description: Créé
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/UserOut' }
+
+  /users/{email}:
+    parameters:
+      - in: path
+        name: email
+        required: true
+        schema: { type: string }
+    get:
+      summary: Détail utilisateur
+      tags: [Users]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/UserOut' }
+        "404": { description: Not Found }
+    put:
+      summary: Modifier un utilisateur
+      tags: [Users]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username: { type: string }
+                email: { type: string, format: email }
+            example:
+              username: "Alice Cooper"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/UserOut' }
+        "404": { description: Not Found }
+    delete:
+      summary: Supprimer un utilisateur
+      tags: [Users]
+      responses:
+        "204": { description: No Content }
+
+  /login:
+    post:
+      summary: Connexion (crée une session)
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema: { $ref: '#/components/schemas/LoginRequest' }
+            example: { email: admin@port-russell.local, password: Admin123! }
+      responses:
+        "200": { description: OK (JSON) }
+        "302": { description: Redirection vers /dashboard si Accept: text/html }
+
+  /logout:
+    get:
+      summary: Déconnexion (détruit la session)
+      tags: [Auth]
+      responses:
+        "200": { description: OK (JSON) }
+        "302": { description: Redirection vers / }
+
+components:
+  schemas:
+    Catway:
+      type: object
+      properties:
+        _id: { type: string }
+        catwayNumber: { type: integer }
+        catwayType: { type: string, enum: [long, short] }
+        catwayState: { type: string }
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+
+    CatwayCreate:
+      type: object
+      required: [catwayNumber, catwayType, catwayState]
+      properties:
+        catwayNumber: { type: integer }
+        catwayType: { type: string, enum: [long, short] }
+        catwayState: { type: string }
+
+    Reservation:
+      type: object
+      properties:
+        _id: { type: string }
+        catwayNumber: { type: integer }
+        clientName: { type: string }
+        boatName: { type: string }
+        startDate: { type: string, format: date }
+        endDate: { type: string, format: date }
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+
+    ReservationCreate:
+      type: object
+      required: [clientName, boatName, startDate, endDate]
+      properties:
+        clientName: { type: string }
+        boatName: { type: string }
+        startDate: { type: string, format: date }
+        endDate: { type: string, format: date }
+
+    ReservationUpdate:
+      type: object
+      properties:
+        clientName: { type: string }
+        boatName: { type: string }
+        startDate: { type: string, format: date }
+        endDate: { type: string, format: date }
+
+    UserOut:
+      type: object
+      properties:
+        username: { type: string }
+        email: { type: string, format: email }
+
+    UserIn:
+      type: object
+      required: [username, email, password]
+      properties:
+        username: { type: string }
+        email: { type: string, format: email }
+        password: { type: string, minLength: 8 }
+
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email: { type: string, format: email }
+        password: { type: string, minLength: 8 }

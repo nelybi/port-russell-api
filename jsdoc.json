@@ -1,0 +1,12 @@
+{
+  "source": { "include": ["src/controllers", "src/routes", "src/models"] },
+  "opts": {
+    "source": { "include": ["src/controllers", "src/routes", "src/models"] },
+    "opts": {
+      "destination": "./jsdoc",
+      "recurse": true,
+      "encoding": "utf8",
+      "template": "node_modules/jsdoc/templates/default"
+    }
+  }
+}

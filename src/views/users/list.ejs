@@ -1,0 +1,41 @@
+<%- include('../partials/header') %>
+
+<h2>Utilisateurs</h2>
+
+<table border="1" cellpadding="6">
+  <tr>
+    <th>Username</th>
+    <th>Email</th>
+    <th>Actions</th>
+  </tr>
+  <% users.forEach(u => { %>
+  <tr>
+    <td><%= u.username %></td>
+    <td><a href="/users/<%= u.email %>"><%= u.email %></a></td>
+    <td>
+      <form
+        method="post"
+        action="/users/<%= u.email %>?_method=DELETE"
+        style="display: inline"
+      >
+        <button>Supprimer</button>
+      </form>
+    </td>
+  </tr>
+  <% }) %>
+</table>
+
+<h3>Créer un utilisateur</h3>
+<form method="post" action="/users">
+  <input name="username" placeholder="Username" required />
+  <input name="email" type="email" placeholder="Email" required />
+  <input
+    name="password"
+    type="password"
+    placeholder="Mot de passe (min 8)"
+    required
+  />
+  <button>Créer</button>
+</form>
+
+<%- include('../partials/footer') %>

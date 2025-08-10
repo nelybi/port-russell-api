@@ -1,0 +1,12 @@
+<%- include('partials/header') %>
+
+<h2>Tableau de bord</h2>
+<p>Connecté : <strong><%= user.username %></strong> — <%= user.email %></p>
+
+<ul>
+  <li><a href="/catways">Gérer les catways</a></li>
+  <li><a href="/users">Gérer les utilisateurs</a></li>
+  <li><a href="/api-docs" target="_blank">Doc API (Swagger)</a></li>
+</ul>
+
+<%- include('partials/footer') %>

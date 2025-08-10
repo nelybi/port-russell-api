@@ -1,0 +1,16 @@
+<%- include('../partials/header') %>
+
+<h2>Utilisateur</h2>
+<p><strong>Username :</strong> <%= user.username %></p>
+<p><strong>Email :</strong> <%= user.email %></p>
+
+<h3>Modifier</h3>
+<form method="post" action="/users/<%= user.email %>?_method=PUT">
+  <input name="username" value="<%= user.username %>" />
+  <input name="email" value="<%= user.email %>" readonly />
+  <button>Mettre à jour</button>
+</form>
+
+<p><a href="/users">← Retour à la liste</a></p>
+
+<%- include('../partials/footer') %>

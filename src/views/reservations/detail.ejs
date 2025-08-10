@@ -1,0 +1,45 @@
+<%- include('../partials/header') %>
+
+<h2>Détail réservation</h2>
+
+<p><strong>Catway :</strong> <%= reservation.catwayNumber %></p>
+<p><strong>Client :</strong> <%= reservation.clientName %></p>
+<p><strong>Bateau :</strong> <%= reservation.boatName %></p>
+<p>
+  <strong>Début :</strong> <%= new
+  Date(reservation.startDate).toLocaleDateString('fr-FR') %>
+</p>
+<p>
+  <strong>Fin :</strong> <%= new
+  Date(reservation.endDate).toLocaleDateString('fr-FR') %>
+</p>
+
+<h3>Modifier</h3>
+<form
+  method="post"
+  action="/catways/<%= reservation.catwayNumber %>/reservations/<%= reservation._id %>?_method=PUT"
+>
+  <input name="clientName" value="<%= reservation.clientName %>" required />
+  <input name="boatName" value="<%= reservation.boatName %>" required />
+  <input
+    name="startDate"
+    type="date"
+    value="<%= new Date(reservation.startDate).toISOString().slice(0,10) %>"
+    required
+  />
+  <input
+    name="endDate"
+    type="date"
+    value="<%= new Date(reservation.endDate).toISOString().slice(0,10) %>"
+    required
+  />
+  <button>Mettre à jour</button>
+</form>
+
+<p>
+  <a href="/catways/<%= reservation.catwayNumber %>/reservations"
+    >← Retour aux réservations</a
+  >
+</p>
+
+<%- include('../partials/footer') %>

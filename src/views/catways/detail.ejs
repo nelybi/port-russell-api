@@ -1,0 +1,19 @@
+<%- include('../partials/header') %>
+
+<h2>Catway <%= catway.catwayNumber %></h2>
+<p>Type : <%= catway.catwayType %></p>
+<p>État : <%= catway.catwayState %></p>
+
+<h3>Modifier l'état</h3>
+<form method="post" action="/catways/<%= catway.catwayNumber %>?_method=PUT">
+  <input name="catwayState" value="<%= catway.catwayState %>" />
+  <button>Mettre à jour</button>
+</form>
+
+<p>
+  <a href="/catways/<%= catway.catwayNumber %>/reservations"
+    >Voir réservations</a
+  >
+</p>
+
+<%- include('../partials/footer') %>

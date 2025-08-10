@@ -1,0 +1,46 @@
+<%- include('../partials/header') %>
+
+<h2>Réservations du catway <%= catwayNumber %></h2>
+
+<table border="1" cellpadding="6">
+  <tr>
+    <th>Client</th>
+    <th>Bateau</th>
+    <th>Début</th>
+    <th>Fin</th>
+    <th>Actions</th>
+  </tr>
+  <% reservations.forEach(r => { %>
+  <tr>
+    <td><%= r.clientName %></td>
+    <td><%= r.boatName %></td>
+    <td><%= new Date(r.startDate).toLocaleDateString('fr-FR') %></td>
+    <td><%= new Date(r.endDate).toLocaleDateString('fr-FR') %></td>
+    <td>
+      <a href="/catways/<%= r.catwayNumber %>/reservations/<%= r._id %>"
+        >Détail</a
+      >
+      <form
+        method="post"
+        action="/catways/<%= r.catwayNumber %>/reservations/<%= r._id %>?_method=DELETE"
+        style="display: inline"
+      >
+        <button>Supprimer</button>
+      </form>
+    </td>
+  </tr>
+  <% }) %>
+</table>
+
+<h3>Nouvelle réservation</h3>
+<form method="post" action="/catways/<%= catwayNumber %>/reservations">
+  <input name="clientName" placeholder="Client" required />
+  <input name="boatName" placeholder="Bateau" required />
+  <input name="startDate" type="date" required />
+  <input name="endDate" type="date" required />
+  <button>Créer</button>
+</form>
+
+<p><a href="/catways/<%= catwayNumber %>">← Retour au catway</a></p>
+
+<%- include('../partials/footer') %>
